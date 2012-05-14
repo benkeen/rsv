@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="file:///home/sg552/workspace/rsv/" />
+<title>jquery_example3</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">jquery_example3</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>jquery/example_3_all_validation_rules.html</td>
+	<td></td>
+</tr>
+<!--no input at all-->
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertAlertPresent</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>regexp:field\ is\ required|email|date|today|interger|between\ 1|greater\ than 100|equal\ to\ 100|alphanumeric|favourite\ colour|exactly|in\ length|over\ 5\ characters|at\ least|prime\ number|password|gender</td>
+	<td></td>
+</tr>
+<!--for required field-->
+<tr>
+	<td>type</td>
+	<td>name=user_name</td>
+	<td>value for mandatory filed</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>regexp:email|date|today|interger|between\ 1|greater\ than 100|equal\ to\ 100|alphanumeric|favourite\ colour|exactly|in\ length|over\ 5\ characters|at\ least|prime\ number|password|gender</td>
+	<td></td>
+</tr>
+<!--for email-->
+<tr>
+	<td>type</td>
+	<td>name=email</td>
+	<td>non-null but invalid value</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a valid email address*</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=email</td>
+	<td>sg552sg552@gmail.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<!--email passed-->
+<tr>
+	<td>verifyAlert</td>
+	<td>regexp:date|today|interger|between\ 1|greater\ than 100|equal\ to\ 100|alphanumeric|favourite\ colour|exactly|in\ length|over\ 5\ characters|at\ least|prime\ number|password|gender</td>
+	<td></td>
+</tr>
+<!--for valid date:-->
+<tr>
+	<td>select</td>
+	<td>name=any_date_month</td>
+	<td>label=mm</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=any_date_day</td>
+	<td>label=14</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=any_date_year</td>
+	<td>label=2002</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a valid date*</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=any_date_month</td>
+	<td>label=5</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=any_date_day</td>
+	<td>label=dd</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=any_date_year</td>
+	<td>label=2002</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a valid date*</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=any_date_month</td>
+	<td>label=5</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=any_date_day</td>
+	<td>label=14</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=any_date_year</td>
+	<td>label=yyyy</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<!--date passed-->
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a valid date*</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=any_date_year</td>
+	<td>label=2002</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>regexp:later\ than\ today|interger|between\ 1|greater\ than 100|equal\ to\ 100|alphanumeric|favourite\ colour|exactly|in\ length|over\ 5\ characters|at\ least|prime\ number|password|gender</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

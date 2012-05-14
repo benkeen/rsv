@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="file:///home/sg552/workspace/rsv/" />
+<title>jquery_example2</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">jquery_example2</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>jquery/example_2_another_one.html</td>
+	<td></td>
+</tr>
+<!--no input at all-->
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=#rsvErrors</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>regexp:enter\ your\ (first\ name|last\ name|email|age|martal)</td>
+	<td></td>
+</tr>
+<!--input all the field-->
+<tr>
+	<td>type</td>
+	<td>name=first_name</td>
+	<td>bill</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=last_name</td>
+	<td>smith</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=email</td>
+	<td>invalid === email </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=any_integer</td>
+	<td>2233</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ms2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=#rsvErrors</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>glob:*valid email address*</td>
+	<td></td>
+</tr>
+<!--now input the last field: email-->
+<tr>
+	<td>type</td>
+	<td>name=email</td>
+	<td>sg552sg552@gmail.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertAlert</td>
+	<td>glob:*form validates*</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
