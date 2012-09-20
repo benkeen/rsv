@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Examples -- Really Simple Validation for jQuery .</title>
+
+    <meta name="keyword" content=""/>
+    <meta name="description" content=""/>
+    <meta name="copyright" content="Copyright 1994-2010 Motorola, Inc. All Rights Reserved."/>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="jquery.rsv-2.5.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+  // a custom onComplete handler to prevent form submits for the demo
+  function myOnComplete()
+  {
+    alert("The form validates! (normally, it would submit the form here).");
+    return false;
+  }
+
+    $(document).ready(function() {
+    $("#demo_form4").RSV({
+      onCompleteHandler: myOnComplete,
+      errorFieldClass: "errorField",
+      displayType: "alert-one",
+        rules: [
+            "required,russian_authors,Please enter your favourite Russian author.",
+            "required,japanese_authors,Please select your favourite Japanese authors",
+            "required,num_books_per_year,How many books do you read a year?",
+            "if:num_books_per_year=0,required,no_reading_reason,How come you don't read any books?"
+          ]
+    });
+}); </script>
+
+    <style type="text/css">
+    /* these are the various classes used to style the demo error fields */
+    .errorField {
+      background-color: #990000;
+      color: white;
+    }
+    .errorFieldDemo2 {
+      background-color: #ffffcc;
+      color: #990000;
+    }
+    .errorFieldDemo5 {
+      background-color: #ffffcc;
+      border: 1px solid #aa0000;
+      color: #aa0000;
+    }
+    .errorFieldDemo6 {
+      background-color: green;
+      color: #yellow;
+    }
+    </style>
+  </head>
+  <body>
+<p class="subtitle blue">#4: Display type "alert-one"</p>
+
+    <p>
+      This form uses the "alert-one" display option. When you submit the form, note that instead of
+            displaying all errors at once, it displays one error message at a time, highlighting and
+            focusing on the offending field sequentially.
+    </p>
+
+    <form action="" method="post" id="demo_form4">
+
+      <table class="demoTable" cellpadding="0" cellspacing="1">
+      <tr>
+        <th width="150">Favourite Russian Author:</th>
+        <td>
+          <select name="russian_authors">
+            <option value="">Please Select</option>
+            <option value="Babel">Babel</option>
+            <option value="Bulgakov">Bulgakov</option>
+            <option value="Chekhov">Chekhov</option>
+            <option value="Gorky">Gorky</option>
+            <option value="Dostoevsky">Dostoevsky</option>
+            <option value="Nabokov">Nabokov</option>
+            <option value="Olesha">Olesha</option>
+            <option value="Pasternak">Pasternak</option>
+            <option value="Pushkin">Pushkin</option>
+            <option value="Sholokhov">Sholokhov</option>
+            <option value="Solzhenitsyn">Solzhenitsyn</option>
+            <option value="Tolstoy">Tolstoy</option>
+            <option value="Turgenev">Turgenev</option>
+            <option value="Voinovich">Voinovich</option>
+            <option value="none">Can't stand any of 'em</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Favourite Japanese Authors:</th>
+        <td>
+          <select name="japanese_authors" multiple size="4">
+            <option value="Kobo Abe">Kobo Abe</option>
+            <option value="Yasunari Kawabata">Yasunari Kawabata</option>
+            <option value="Yukio Mishima">Yukio Mishima</option>
+            <option value="Haruki Murakami">Haruki Murakami</option>
+            <option value="Kenzaburo Oe">Kenzaburo Oe</option>
+            <option value="Murasaki Shikibu">Murasaki Shikibu</option>
+            <option value="Natsume Soseki">Natsume Soseki</option>
+            <option value="Junichiro Tanizaki">Junichiro Tanizaki</option>
+            <option value="Banana Yoshimoto">Banana Yoshimoto</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>How many books do you read a year?</th>
+        <td>
+          <input type="radio" name="num_books_per_year" value="0" id="nb1" />
+            <label for="nb1">Absolutely none</label><br />
+          <input type="radio" name="num_books_per_year" value="1" id="nb2" />
+            <label for="nb2">1</label><br />
+          <input type="radio" name="num_books_per_year" value="2" id="nb3" />
+            <label for="nb3">2</label><br />
+          <input type="radio" name="num_books_per_year" value="5" id="nb4" />
+            <label for="nb4">About 5</label><br />
+          <input type="radio" name="num_books_per_year" value="10" id="nb5" />
+            <label for="nb5">About 10</label><br />
+          <input type="radio" name="num_books_per_year" value="15" id="nb8" />
+            <label for="nb8">Over 15</label>
+        </td>
+      </tr>
+      <tr>
+        <th>If you answered "absolutely none" for the above, how come?</th>
+        <td>
+          <input type="text" name="no_reading_reason" />
+        </td>
+      </tr>
+      </table>
+
+      <p><input type="submit" value="SUBMIT" /></p>
+
+    </form>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+/*
+  Used for the display-html display type demo forms! Style it however you want, but
+    the display: none option is recommended.
+*/
+#rsvErrors {
+    display: none;
+    padding: 8px;
+    background-color: #ffffcc;
+    border: 1px solid #aa0000;
+    line-height: 12px;
+    margin-bottom: 12px;
+}
+
+html { overflow: -moz-scrollbars-vertical; }
+body {
+    margin: 0px;
+  padding: 0px;
+}
+body,p,table,td,input,select {
+  font-family: verdana, tahoma;
+    font-size: 8pt;
+  line-height: 14pt;
+}
+.demoTable tr { height: 22px; }
+.demoTable td {
+  background-color: #efefef;
+  border-bottom: 1px solid #dddddd;
+}
+.demoTable th {
+    font-weight: normal;
+    color: #333333;
+    text-align: left;
+  background-color: #efefef;
+  border-bottom: 1px solid #dddddd;
+  padding-left: 5px;
+}
+#main_table { background-image: url(demo_bg.jpg) }
+#topBanner { height: 40px; border-bottom: 1px solid black; margin-bottom: 20px; background-color: #efefef; }
+.nav_selected { color: #50c7ff; font-weight: bold; }
+.title { font-family: arial; font-size: 16pt; }
+.subtitle { font-family: arial; font-size: 11pt; font-weight: bold; }
+.section { font-size: 10pt; color: #50c7ff; }
+.blue { color: #336699; }
+.bold { font-weight: bold }
+.grey { color: #666666; }
+a:link, a:visited { color: #006699; text-decoration: none; }
+a:hover { text-decoration:underline; }
+
+hr {
+  color: #efefef;
+  background-color: #efefef;
+  height: 1px;
+    border: 0px;
+    margin-bottom: 15px;
+}
+.source_code {
+  border: 1px dashed #cccccc;
+  padding: 7px;
+  background-color: #ffffee;
+}
+
+.custom_error {
+  background-color: pink;
+    border: 1px solid red;
+    padding: 5px;
+    color: #660000;
+  display:none;
+}
