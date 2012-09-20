@@ -1,0 +1,11 @@
+1. make a soft link so that selenium IDE could find the scripts:
+    $ ln -s <RSV_PROJECT_PATH> /tmp/rsv
+    e.g. in my environment, RSV_PROJECT_PATH = '/home/sg552/workspace/rsv'
+    $ ln -s /home/sg552/workspace/rsv /tmp/rsv
+
+2. install selenium IDE using firefox, see: http://seleniumhq.org/docs/02_selenium_ide.html#installing-the-ide
+
+3. run 'selenium IDE' and open the test suite: 'jquery_test_suite.html', and have fun!
+
+screen shot:
+http://www.siwei.me/system/resources/BAhbBlsHOgZmIjsyMDEyLzA5LzIwLzE2XzIyXzQ5XzQyNF9zZWxlbml1bV90ZXN0X3N1aXRlX3Jlc3VsdC5wbmc/selenium_test_suite_result.png
