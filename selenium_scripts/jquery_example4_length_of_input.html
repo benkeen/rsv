@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="file:///home/sg552/workspace/rsv/" />
+<title>jquery_example3</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">jquery_example3</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>jquery/example_3_all_validation_rules.html</td>
+	<td></td>
+</tr>
+<!--no input should cause required fields alert.-->
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter an integer*</td>
+	<td></td>
+</tr>
+<!--1. for length=2-->
+<!--case1.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case1.2 bad pattern, length =1-->
+<tr>
+	<td>type</td>
+	<td>name=char_length</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a value that is exactly two characters long*</td>
+	<td></td>
+</tr>
+<!--case1.3 bad pattern, length =3-->
+<tr>
+	<td>type</td>
+	<td>name=char_length</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a value that is exactly two characters long*</td>
+	<td></td>
+</tr>
+<!--2. for length=(3..5)-->
+<!--case2.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_range</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case2.2 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_range</td>
+	<td>12345</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case2.3 bad pattern, length =2-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_range</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a value that is between 3 and 5 characters in length*</td>
+	<td></td>
+</tr>
+<!--case2.4 bad pattern, length =6-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_range</td>
+	<td>123456</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a value that is between 3 and 5 characters in length*</td>
+	<td></td>
+</tr>
+<!--3. for length > 5-->
+<!--case3.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_greater_than</td>
+	<td>123456</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case3.2 bad pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_greater_than</td>
+	<td>12345</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a value that is over 5 characters long*</td>
+	<td></td>
+</tr>
+<!--4. for length >= 5-->
+<!--case4.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_greater_than_or_equal</td>
+	<td>12345</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case4.2 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_greater_than_or_equal</td>
+	<td>123456</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case4.3 bad pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_greater_than_or_equal</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a value that is at least 5 characters long*</td>
+	<td></td>
+</tr>
+<!--5. for length < 5-->
+<!--case5.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_less_than</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case5.2 bad pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_less_than</td>
+	<td>12345</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a value that is less than 5 characters long*</td>
+	<td></td>
+</tr>
+<!--6. for length <= 5-->
+<!--case6.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_less_than_or_equal</td>
+	<td>12345</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case6.2 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_less_than_or_equal</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case6.3 bad pattern-->
+<tr>
+	<td>type</td>
+	<td>name=char_length_less_than_or_equal</td>
+	<td>123456</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a value that is less than or equal to 5 characters*</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
