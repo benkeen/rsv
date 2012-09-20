@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="file:///home/sg552/workspace/rsv/" />
+<title>jquery_example3</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">jquery_example3</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>jquery/example_4_display_type_alert_one.html</td>
+	<td></td>
+</tr>
+<!--no input at all-->
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>Please enter your favourite Russian author.</td>
+	<td></td>
+</tr>
+<!--step1. select the author-->
+<tr>
+	<td>select</td>
+	<td>name=russian_authors</td>
+	<td>label=Gorky</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>Please select your favourite Japanese authors</td>
+	<td></td>
+</tr>
+<!--step2. select jp authors-->
+<tr>
+	<td>addSelection</td>
+	<td>name=japanese_authors</td>
+	<td>label=Yukio Mishima</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>name=japanese_authors</td>
+	<td>label=Haruki Murakami</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>How many books do you read a year?</td>
+	<td></td>
+</tr>
+<!--step3.2 select books to be none-->
+<tr>
+	<td>click</td>
+	<td>//input[@name='num_books_per_year' and @value=0]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>How come you don't read any books?</td>
+	<td></td>
+</tr>
+<!--step3.3 answer why don't read books.-->
+<tr>
+	<td>type</td>
+	<td>name=no_reading_reason</td>
+	<td>I am a lazy boy</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>The form validates! (normally, it would submit the form here).</td>
+	<td></td>
+</tr>
+<!--step3.1 select books to be 2-->
+<tr>
+	<td>click</td>
+	<td>//input[@name='num_books_per_year' and @value=2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>The form validates! (normally, it would submit the form here).</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
