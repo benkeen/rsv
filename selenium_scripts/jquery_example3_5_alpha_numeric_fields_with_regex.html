@@ -320,6 +320,104 @@
 	<td>glob:*Please enter a string of form #XccccCCCC*</td>
 	<td></td>
 </tr>
+<!--6. for case sensitive pattern-->
+<!--case6.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field1</td>
+	<td>red</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case6.2 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field1</td>
+	<td>RED</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter your favourite colour in lowercase*</td>
+	<td></td>
+</tr>
+<!--case6.3 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field1</td>
+	<td>foo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter your favourite colour in lowercase*</td>
+	<td></td>
+</tr>
+<!--7. for case insensitive pattern-->
+<!--case7.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field2</td>
+	<td>red</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case7.2 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field2</td>
+	<td>RED</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case7.2 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field2</td>
+	<td>foo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter your favourite colour in lowercase*</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>
