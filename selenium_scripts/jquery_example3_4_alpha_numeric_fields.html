@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="file:///home/sg552/workspace/rsv/" />
+<title>jquery_example3</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">jquery_example3</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>jquery/example_3_all_validation_rules.html</td>
+	<td></td>
+</tr>
+<!--no input should cause required fields alert.-->
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter an integer*</td>
+	<td></td>
+</tr>
+<!--1. for any letter-->
+<!--case1.1 number should cause alert.-->
+<tr>
+	<td>type</td>
+	<td>name=letter_field</td>
+	<td>11</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please only enter letters (a-Z) in this field*</td>
+	<td></td>
+</tr>
+<!--case1.2 underscore should cause alert.-->
+<tr>
+	<td>type</td>
+	<td>name=letter_field</td>
+	<td>a_b</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please only enter letters (a-Z) in this field*</td>
+	<td></td>
+</tr>
+<!--case1.3 blank should cause alert.-->
+<tr>
+	<td>type</td>
+	<td>name=letter_field</td>
+	<td>a b</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please only enter letters (a-Z) in this field*</td>
+	<td></td>
+</tr>
+<!--case1.4 letter should cause pass-->
+<tr>
+	<td>type</td>
+	<td>name=letter_field</td>
+	<td>aaa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--2. for any alphanumeric letters-->
+<!--case2.1 * or ' ' should both cause alert-->
+<tr>
+	<td>type</td>
+	<td>name=alpha_field</td>
+	<td>1 a</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please only enter alphanumeric characters (0-9 a-Z) in this field*</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=alpha_field</td>
+	<td>1_with_underscore*</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please only enter alphanumeric characters (0-9 a-Z) in this field*</td>
+	<td></td>
+</tr>
+<!--case2.2 number and alpha should work.-->
+<tr>
+	<td>type</td>
+	<td>name=alpha_field</td>
+	<td>a1b2c3d4</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+</tbody></table>
+</body>
+</html>
