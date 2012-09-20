@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="file:///home/sg552/workspace/rsv/" />
+<title>jquery_example3</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">jquery_example3</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>jquery/example_3_all_validation_rules.html</td>
+	<td></td>
+</tr>
+<!--case 1. if not select, alerts-->
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter your gender*</td>
+	<td></td>
+</tr>
+<!--case 2.1 if choose male, not fill info-->
+<tr>
+	<td>click</td>
+	<td>//input[@name='gender' and @value='male']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter the name of your favourite Care Bear*</td>
+	<td></td>
+</tr>
+<!--case 2.2 if choose male, fill info-->
+<tr>
+	<td>type</td>
+	<td>name=male_question</td>
+	<td>men's answer</td>
+</tr>
+<tr>
+	<td>verifyAlertNotPresent</td>
+	<td></td>
+	<td></td>
+</tr>
+<!--case 3.1 if choose female, not fill info-->
+<tr>
+	<td>click</td>
+	<td>//input[@name='gender' and @value='female']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please indicate what max weight you can bench*</td>
+	<td></td>
+</tr>
+<!--case 2.2 if choose male, fill info-->
+<tr>
+	<td>type</td>
+	<td>name=female_question</td>
+	<td>women's answer</td>
+</tr>
+<tr>
+	<td>verifyAlertNotPresent</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
