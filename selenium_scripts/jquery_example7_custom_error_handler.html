@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="file:///home/sg552/workspace/rsv/" />
+<title>jquery_example3</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">jquery_example3</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>jquery/example_7_custom_error_handler.html</td>
+	<td></td>
+</tr>
+<!--no input at all-->
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Please enter your first name.</td>
+	<td></td>
+</tr>
+<!--let's input all the fields.-->
+<tr>
+	<td>type</td>
+	<td>name=first_name</td>
+	<td>Jim</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=last_name</td>
+	<td>Green</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=email</td>
+	<td>jim@green.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=any_integer</td>
+	<td>33</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@name='marital_status' and @value='single']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>Form submitted here!</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
