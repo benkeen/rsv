@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Examples -- Really Simple Validation for jQuery .</title>
+
+    <meta name="keyword" content=""/>
+    <meta name="description" content=""/>
+    <meta name="copyright" content="Copyright 1994-2010 Motorola, Inc. All Rights Reserved."/>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="jquery.rsv-2.5.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+  // a custom onComplete handler to prevent form submits for the demo
+  function myOnComplete()
+  {
+    alert("The form validates! (normally, it would submit the form here).");
+    return false;
+  }
+
+    var rules = [];
+
+// standard form fields
+rules.push("required,user_name,This field is required.");
+rules.push("required,email,Please enter your email address.");
+rules.push("valid_email,email,Please enter a valid email address.");
+
+// date fields
+rules.push("valid_date,any_date_month,any_date_day,any_date_year,any_date,Please enter a valid date.");
+rules.push("valid_date,later_date_month,later_date_day,later_date_year,later_date,Please enter a date later than today.");
+
+// Numbers / alphanumeric fields
+rules.push("required,any_integer,Please enter an integer.");
+rules.push("digits_only,any_integer,This field may only contain digits.");
+rules.push("digits_only,number_range,This field may only contain digits.");
+rules.push("range=1-100,number_range,Please enter a number between 1 and 100.");
+rules.push("range>100,number_range_greater_than,Please enter a number greater than 100.");
+rules.push("range>=100,number_range_greater_than_or_equal,Please enter a number greater than or equal to 100.");
+rules.push("range<100,number_range_less_than,Please enter a number less than 100.");
+rules.push("range<=100,number_range_less_than_or_equal,Please enter a number less than or equal to 100.");
+rules.push("letters_only,letter_field,Please only enter letters (a-Z) in this field.");
+rules.push("required,alpha_field,Please enter an alphanumeric (0-9 a-Z) string.");
+rules.push("is_alpha,alpha_field,Please only enter alphanumeric characters (0-9 a-Z) in this field.");
+rules.push("custom_alpha,custom_alpha_field1,LLL-VVV,Please enter a string of form LLL-VVV - where L is an uppercase letter and V is an uppercase vowel.");
+rules.push("custom_alpha,custom_alpha_field2,DDxxx,Please enter a string of form DDxxx.");
+rules.push("custom_alpha,custom_alpha_field3,EEXX,Please enter a string of form EEXX.");
+rules.push("custom_alpha,custom_alpha_field4,VVvvllFF,Please enter a string of form VVvvllFF.");
+rules.push("custom_alpha,custom_alpha_field5,#XccccCCCC,Please enter a string of form #XccccCCCC.");
+rules.push("reg_exp,reg_exp_field1,^\s*(red|orange|yellow|green|blue|indigo|violet|pink|white)\s*$,Please enter your favourite colour in lowercase (e.g. \"red\" or \"blue\")");
+rules.push("required,reg_exp_field2,Please enter your favourite colour (e.g. \"red\" or \"blue\")");
+rules.push("reg_exp,reg_exp_field2,^\s*(red|orange|yellow|green|blue|indigo|violet|pink|white)\s*$,i,Please enter your favourite colour (e.g. \"red\" or \"blue\")");
+
+// Length of field input
+rules.push("length=2,char_length,Please enter a value that is exactly two characters long.");
+rules.push("length=3-5,char_length_range,Please enter a value that is between 3 and 5 characters in length.");
+rules.push("length>5,char_length_greater_than,Please enter a value that is over 5 characters long.");
+rules.push("length>=5,char_length_greater_than_or_equal,Please enter a value that is at least 5 characters long.");
+rules.push("length<5,char_length_less_than,Please enter a value that is less than 5 characters long.");
+rules.push("length<=5,char_length_less_than_or_equal,Please enter a value that is less than or equal to 5 characters.");
+
+// custom functions
+rules.push("function,my_custom_function");
+
+// password fields
+rules.push("required,password,Please enter a password.");
+rules.push("same_as,password,password_2,Please ensure the passwords you enter are the same.");
+
+// conditional (if-else) fields
+rules.push("required,gender,Please enter your gender.");
+rules.push("if:gender=male,required,male_question,Please enter the name of your favourite Care Bear.");
+rules.push("if:gender=female,required,female_question,Please indicate what max weight you can bench.");
+
+
+// a custom validation function
+function my_custom_function()
+{
+    var prime_nums_str = "1|2|3|5|7|11|13|17|19|23|29|31|37|41|43|47|53|59|61|67|71|73|79|83|89|97";
+    var prime_numbers = prime_nums_str.split("|");
+
+    var val = document.getElementById("prime_number").value;
+
+    var is_valid_num = false;
+    for (i=0; i<prime_numbers.length; i++)
+    {
+        if (prime_numbers[i] == val)
+            is_valid_num = true;
+    }
+
+    if (!is_valid_num)
+    {
+        var field = document.getElementById("prime_number");
+        return [[field, "Please enter a prime number under 100."]];
+    }
+
+    return true;
+}
+
+$(document).ready(function() {
+    $("#demo_form3").RSV({
+        onCompleteHandler: myOnComplete,
+        rules: rules
+    });
+}); </script>
+
+    <style type="text/css">
+    /* these are the various classes used to style the demo error fields */
+    .errorField {
+      background-color: #990000;
+      color: white;
+    }
+    .errorFieldDemo2 {
+      background-color: #ffffcc;
+      color: #990000;
+    }
+    .errorFieldDemo5 {
+      background-color: #ffffcc;
+      border: 1px solid #aa0000;
+      color: #aa0000;
+    }
+    .errorFieldDemo6 {
+      background-color: green;
+      color: #yellow;
+    }
+    </style>
+  </head>
+  <body>
+<p class="subtitle blue">#3: All validation rules</p>
+
+    <p>
+          Alright, now down to business. This form contains all the validation options that are offered by the
+      script. Since the <b>custom_alpha</b> options are quite advanced and unlikely to be used that often
+            (and because it's a pain figuring out what to enter into the fields to pass the validation!) I've
+            pre-filled those fields to save you the bother.
+    </p>
+
+    <div id="rsvErrors"></div>
+
+    <form action="" method="post" id="demo_form3">
+
+      <p class="section">Standard form fields</p>
+
+      <table class="demoTable">
+      <tr>
+        <td width="230">Required field:</td>
+        <td width="320"><input type="text" name="user_name" /></td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td><input type="text" name="email" /></td>
+      </tr>
+      </table>
+
+      <p class="section">Date fields</p>
+
+      <table class="demoTable">
+      <tr>
+        <td width="230">Any (valid) date:</td>
+        <td width="320">
+          <select name="any_date_month">
+
+            <option value="">mm</option>
+            <option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option>
+          </select>
+
+          <select name="any_date_day">
+            <option value="">dd</option>
+            <option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option><option value='21'>21</option><option value='22'>22</option><option value='23'>23</option><option value='24'>24</option><option value='25'>25</option><option value='26'>26</option><option value='27'>27</option><option value='28'>28</option><option value='29'>29</option><option value='30'>30</option><option value='31'>31</option>
+          </select>
+
+          <select name="any_date_year">
+            <option value="">yyyy</option>
+            <option value='2005'>2005</option><option value='2004'>2004</option><option value='2003'>2003</option><option value='2002'>2002</option><option   value='2001'>2001</option><option     value='2000'>2000</option><option value='1999'>1999</option><option value='1998'>1998</option><option   value='1997'>1997</option><option value='1996'>1996</option><option     value='1995'>1995</option><option value='1994'>1994</option><option   value='1993'>1993</option><option value='1992'>1992</option><option value='1991'>1991</option><option     value='1990'>1990</option><option   value='1989'>1989</option><option value='1988'>1988</option><option value='1987'>1987</option><option value='1986'>1986</option><option       value='1985'>1985</option><option value='1984'>1984</option><option value='1983'>1983</option><option value='1982'>1982</option><option   value='1981'>1981</option><option     value='1980'>1980</option><option value='1979'>1979</option><option value='1978'>1978</option><option   value='1977'>1977</option><option value='1976'>1976</option><option     value='1975'>1975</option><option value='1974'>1974</option><option   value='1973'>1973</option><option value='1972'>1972</option><option value='1971'>1971</option><option     value='1970'>1970</option><option   value='1969'>1969</option><option value='1968'>1968</option><option value='1967'>1967</option><option value='1966'>1966</option><option       value='1965'>1965</option><option value='1964'>1964</option><option value='1963'>1963</option><option value='1962'>1962</option><option   value='1961'>1961</option><option     value='1960'>1960</option><option value='1959'>1959</option><option value='1958'>1958</option><option   value='1957'>1957</option><option value='1956'>1956</option><option     value='1955'>1955</option><option value='1954'>1954</option><option   value='1953'>1953</option><option value='1952'>1952</option><option value='1951'>1951</option><option     value='1950'>1950</option><option   value='1949'>1949</option><option value='1948'>1948</option><option value='1947'>1947</option><option value='1946'>1946</option><option       value='1945'>1945</option><option value='1944'>1944</option><option value='1943'>1943</option><option value='1942'>1942</option><option   value='1941'>1941</option><option     value='1940'>1940</option><option value='1939'>1939</option><option value='1938'>1938</option><option   value='1937'>1937</option><option value='1936'>1936</option><option     value='1935'>1935</option><option value='1934'>1934</option><option   value='1933'>1933</option><option value='1932'>1932</option><option value='1931'>1931</option><option     value='1930'>1930</option><option   value='1929'>1929</option><option value='1928'>1928</option><option value='1927'>1927</option><option value='1926'>1926</option><option       value='1925'>1925</option><option value='1924'>1924</option><option value='1923'>1923</option><option value='1922'>1922</option><option   value='1921'>1921</option><option     value='1920'>1920</option><option value='1919'>1919</option><option value='1918'>1918</option><option   value='1917'>1917</option><option value='1916'>1916</option><option     value='1915'>1915</option><option value='1914'>1914</option><option   value='1913'>1913</option><option value='1912'>1912</option><option value='1911'>1911</option><option     value='1910'>1910</option><option   value='1909'>1909</option><option value='1908'>1908</option><option value='1907'>1907</option><option value='1906'>1906</option><option       value='1905'>1905</option><option value='1904'>1904</option><option value='1903'>1903</option><option value='1902'>1902</option><option   value='1901'>1901</option><option     value='1900'>1900</option>
+          </select>
+
+        </td>
+      </tr>
+      <tr>
+        <td>Any date later than today:</td>
+        <td>
+          <select name="later_date_month">
+            <option value="">mm</option>
+            <option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option>
+          </select>
+
+          <select name="later_date_day">
+            <option value="">dd</option>
+            <option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option><option value='21'>21</option><option value='22'>22</option><option value='23'>23</option><option value='24'>24</option><option value='25'>25</option><option value='26'>26</option><option value='27'>27</option><option value='28'>28</option><option value='29'>29</option><option value='30'>30</option><option value='31'>31</option>
+          </select>
+
+          <select name="later_date_year">
+            <option value="">yyyy</option>
+            <option value='2012'>2012</option><option value='2011'>2011</option><option value='2010'>2010</option><option value='2009'>2009</option><option   value='2008'>2008</option><option     value='2007'>2007</option><option value='2006'>2006</option><option   value='2005'>2005</option><option   value='2004'>2004</option><option value='2003'>2003</option><option     value='2002'>2002</option><option value='2001'>2001</option><option     value='2000'>2000</option><option value='1999'>1999</option><option value='1998'>1998</option><option     value='1997'>1997</option><option   value='1996'>1996</option><option   value='1995'>1995</option><option value='1994'>1994</option><option value='1993'>1993</option><option       value='1992'>1992</option><option value='1991'>1991</option><option   value='1990'>1990</option><option value='1989'>1989</option><option   value='1988'>1988</option><option     value='1987'>1987</option><option value='1986'>1986</option><option   value='1985'>1985</option><option   value='1984'>1984</option><option value='1983'>1983</option><option     value='1982'>1982</option><option value='1981'>1981</option><option     value='1980'>1980</option><option value='1979'>1979</option><option value='1978'>1978</option><option     value='1977'>1977</option><option   value='1976'>1976</option><option   value='1975'>1975</option><option value='1974'>1974</option><option value='1973'>1973</option><option       value='1972'>1972</option><option value='1971'>1971</option><option   value='1970'>1970</option><option value='1969'>1969</option><option   value='1968'>1968</option><option     value='1967'>1967</option><option value='1966'>1966</option><option   value='1965'>1965</option><option   value='1964'>1964</option><option value='1963'>1963</option><option     value='1962'>1962</option><option value='1961'>1961</option><option     value='1960'>1960</option><option value='1959'>1959</option><option value='1958'>1958</option><option     value='1957'>1957</option><option   value='1956'>1956</option><option   value='1955'>1955</option><option value='1954'>1954</option><option value='1953'>1953</option><option       value='1952'>1952</option><option value='1951'>1951</option><option   value='1950'>1950</option><option value='1949'>1949</option><option   value='1948'>1948</option><option     value='1947'>1947</option><option value='1946'>1946</option><option   value='1945'>1945</option><option   value='1944'>1944</option><option value='1943'>1943</option><option     value='1942'>1942</option><option value='1941'>1941</option><option     value='1940'>1940</option><option value='1939'>1939</option><option value='1938'>1938</option><option     value='1937'>1937</option><option   value='1936'>1936</option><option   value='1935'>1935</option><option value='1934'>1934</option><option value='1933'>1933</option><option       value='1932'>1932</option><option value='1931'>1931</option><option   value='1930'>1930</option><option value='1929'>1929</option><option   value='1928'>1928</option><option     value='1927'>1927</option><option value='1926'>1926</option><option   value='1925'>1925</option><option   value='1924'>1924</option><option value='1923'>1923</option><option     value='1922'>1922</option><option value='1921'>1921</option><option     value='1920'>1920</option><option value='1919'>1919</option><option value='1918'>1918</option><option     value='1917'>1917</option><option   value='1916'>1916</option><option   value='1915'>1915</option><option value='1914'>1914</option><option value='1913'>1913</option><option       value='1912'>1912</option><option value='1911'>1911</option><option   value='1910'>1910</option><option value='1909'>1909</option><option   value='1908'>1908</option><option     value='1907'>1907</option><option value='1906'>1906</option><option   value='1905'>1905</option><option   value='1904'>1904</option><option value='1903'>1903</option><option     value='1902'>1902</option><option value='1901'>1901</option><option     value='1900'>1900</option>
+          </select>
+        </td>
+
+      </tr>
+      </table>
+
+
+      <p class="section">Numbers / alphanumeric fields</p>
+
+      <table class="demoTable">
+      <tr>
+        <td width="230">Any integer:</td>
+        <td width="350"><input type="text" name="any_integer" /> (required)</td>
+      </tr>
+      <tr>
+        <td>Enter a number from 1-100:</td>
+        <td><input type="text" name="number_range" /></td>
+      </tr>
+      <tr>
+        <td>Enter a number greater than 100:</td>
+        <td><input type="text" name="number_range_greater_than" /></td>
+      </tr>
+      <tr>
+        <td>Enter a number greater than or equal to 100:</td>
+        <td><input type="text" name="number_range_greater_than_or_equal" /></td>
+      </tr>
+      <tr>
+        <td>Enter a number less than 100:</td>
+        <td><input type="text" name="number_range_less_than" /></td>
+      </tr>
+      <tr>
+        <td>Enter a number less than or equal to 100:</td>
+        <td><input type="text" name="number_range_less_than_or_equal" /></td>
+      </tr>
+      <tr>
+        <td>Enter any letter:</td>
+        <td><input type="text" name="letter_field" /> (optional)</td>
+      </tr>
+      <tr>
+        <td>Enter any alphanumeric characters:</td>
+        <td><input type="text" name="alpha_field" /> (required)</td>
+      </tr>
+      <tr>
+        <td>Enter strings in the fields according to the following legend:
+
+          <table cellspacing="0" style="border: 1px solid #555555">
+          <tr>
+            <th width="20">L</th>
+            <td>An uppercase letter.</td>
+            <th width="20">V</th>
+            <td>An uppercase vowel.</td>
+          </tr>
+          <tr>
+            <th>l</th>
+            <td>A lowercase letter.</td>
+            <th>v</th>
+            <td>A lowercase vowel.</td>
+          </tr>
+          <tr>
+            <th>D</th>
+            <td>A letter (upper or lower)</td>
+            <th>F</th>
+            <td>A vowel (upper or lower)</td>
+          </tr>
+          <tr>
+            <th>C</th>
+            <td>An uppercase Consonant</td>
+            <th>x</th>
+            <td>Any number, 0-9</td>
+          </tr>
+          <tr>
+            <th>c</th>
+            <td>A lowercase consonant</td>
+            <th>X</th>
+            <td>Any number, 1-9</td>
+          </tr>
+          <tr>
+            <th>E</th>
+            <td colspan="3">A consonant (upper or lower)</td>
+          </tr>
+          </table>
+
+        </td>
+        <td>
+
+          <table cellspacing="0">
+          <tr>
+            <td><input type="text" name="custom_alpha_field1" value="BCD-AEI" /> LLL-VVV</td>
+          </tr>
+          <tr>
+            <td><input type="text" name="custom_alpha_field2" value="aB012" /> DDxxx</td>
+          </tr>
+          <tr>
+            <td><input type="text" name="custom_alpha_field3" value="bB34" /> EEXX</td>
+          </tr>
+          <tr>
+            <td><input type="text" name="custom_alpha_field4" value="OUoucgAa" /> VVvvllFF</td>
+          </tr>
+          <tr>
+            <td><input type="text" name="custom_alpha_field5" value="#8rtyhWRGS" /> #XccccCCCC</td>
+          </tr>
+          </table>
+
+          <br />
+
+        </td>
+      </tr>
+      <tr>
+        <td>Enter your favourite colour:</td>
+        <td><input type="text" name="reg_exp_field1" /> (lowercase, optional)</td>
+      </tr>
+      <tr>
+        <td>Enter your favourite colour:</td>
+        <td><input type="text" name="reg_exp_field2" /> (case-insensitive, required)</td>
+      </tr>
+      </table>
+
+      <p class="section">Length of field input</p>
+
+      <table class="demoTable">
+      <tr>
+        <td width="230">Enter 2 characters:</td>
+        <td width="320"><input type="text" name="char_length" /></td>
+      </tr>
+      <tr>
+        <td>Enter between 3 and 5 chars:</td>
+        <td><input type="text" name="char_length_range" /></td>
+      </tr>
+      <tr>
+        <td>Enter over 5 characters:</td>
+        <td><input type="text" name="char_length_greater_than" /></td>
+      </tr>
+      <tr>
+        <td>Enter at least 5 characters:</td>
+        <td><input type="text" name="char_length_greater_than_or_equal" /></td>
+      </tr>
+      <tr>
+        <td>Enter less than 5 characters:</td>
+        <td><input type="text" name="char_length_less_than" /></td>
+      </tr>
+
+      <tr>
+        <td>Enter less than or equal to 5 characters:</td>
+        <td><input type="text" name="char_length_less_than_or_equal" /></td>
+      </tr>
+      </table>
+
+      <p class="section">Custom function</p>
+
+      <table class="demoTable">
+      <tr>
+        <td width="230">Enter any prime number under 100</td>
+        <td width="320"><input type="text" name="prime_number" id="prime_number" /></td>
+      </tr>
+      </table>
+
+      <p class="section">Password fields</p>
+
+      <table class="demoTable">
+      <tr>
+        <td width="230">Enter a password:</td>
+        <td width="320"><input type="password" name="password" /></td>
+      </tr>
+      <tr>
+        <td>Enter a password (re-enter):</td>
+        <td><input type="password" name="password_2" /></td>
+      </tr>
+      </table>
+
+      <p class="section">Conditional (if-else) fields</p>
+
+      <table class="demoTable">
+      <tr>
+        <td width="230">Your gender:</td>
+        <td width="320">
+          <input type="radio" name="gender" value="male" />Male
+            <input type="radio" name="gender" value="female" />Female
+        </td>
+      </tr>
+      <tr>
+        <td>Who's your favourite Care Bear? (Men):</td>
+        <td><input type="text" name="male_question" /></td>
+      </tr>
+
+      <tr>
+        <td>How much can you bench? (Women):</td>
+        <td><input type="text" name="female_question" /></td>
+      </tr>
+      </table>
+
+      <p><input type="submit" value="SUBMIT" /></p>
+
+    </form>
+  </body>
+</html>

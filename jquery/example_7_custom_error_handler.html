@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Examples -- Really Simple Validation for jQuery .</title>
+
+    <meta name="keyword" content=""/>
+    <meta name="description" content=""/>
+    <meta name="copyright" content="Copyright 1994-2010 Motorola, Inc. All Rights Reserved."/>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="jquery.rsv-2.5.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+  // a custom onComplete handler to prevent form submits for the demo
+  function myOnComplete()
+  {
+    alert("The form validates! (normally, it would submit the form here).");
+    return false;
+  }
+
+
+/**
+ * My custom error message handler. This displays each error message next to
+ * each field. It assumes there are hidden fields
+ */
+function myCustomErrorDisplayFunction(f, errorInfo)
+{
+    // disabled all errors by default
+    for (var i=0; i<myRules.length; i++)
+    {
+        var parts = myRules[i].split(",");
+        var fieldName = parts[1];
+
+        document.getElementById(fieldName + "_label").style.color = "#000000";
+        document.getElementById(fieldName + "_error").style.display = "none";
+    }
+
+    for (var i=0; i<errorInfo.length; i++)
+    {
+        var fieldName;
+
+        // radio button
+        if (errorInfo[i][0].type == undefined)
+            fieldName = errorInfo[i][0][0].name;
+        else
+            fieldName = errorInfo[i][0].name;
+
+        // display the error
+        document.getElementById(fieldName + "_label").style.color = "#cc0000";
+        document.getElementById(fieldName + "_error").style.display = "block";
+        document.getElementById(fieldName + "_error").innerHTML = errorInfo[i][1];
+    }
+
+    // normally, we'd do something like this: only return TRUE if there were no errors.
+    // but this is just a demo. so it's commented out.
+    //return (errorInfo.length == 0) ? true : false;
+
+    if (errorInfo.length == 0)
+        alert("Form submitted here!");
+
+    return false;
+}
+
+var myRules = [
+    "required,first_name,Please enter your first name.",
+    "required,last_name,Please enter your last name.",
+    "required,email,Please enter your email address.",
+    "valid_email,email,Please enter a valid email address.",
+    "required,any_integer,Please enter your age.",
+    "digits_only,any_integer,The age field may only contain digits.",
+    "required,marital_status,Please enter your marital status."
+];
+
+$(document).ready(function() {
+    $("#demo_form7").RSV({
+        onCompleteHandler: myOnComplete,
+        customErrorHandler: myCustomErrorDisplayFunction,
+        rules: myRules
+    });
+}); </script>
+
+    <style type="text/css">
+    /* these are the various classes used to style the demo error fields */
+    .errorField {
+      background-color: #990000;
+      color: white;
+    }
+    .errorFieldDemo2 {
+      background-color: #ffffcc;
+      color: #990000;
+    }
+    .errorFieldDemo5 {
+      background-color: #ffffcc;
+      border: 1px solid #aa0000;
+      color: #aa0000;
+    }
+    .errorFieldDemo6 {
+      background-color: green;
+      color: #yellow;
+    }
+    </style>
+  </head>
+  <body>
+<p class="subtitle blue">#7: Custom Error Handler</p>
+
+    <p>
+      This example highlights the use of a custom error handler. As we've seen in the previous example,
+      the script can display the errors in one of three ways: alerting them one by one, alerting them all at a time or
+      displaying the result in the webpage. But sometimes you need a little more control.
+    </p>
+    <p>
+      This demo bypasses that built-in functionality and passes the error results to a custom function by using
+      the <b>rsv.customErrorHandler</b> configuration setting and defining our own function:
+      <b>myCustomErrorDisplayFunction</b>. It displays each errors next to the appropriate field, and turns the
+      field label red. See the code below (or view source on the page) to see how it's done.
+    </p>
+
+    <form action="" method="post" id="demo_form7">
+
+      <table class="demoTable" cellpadding="0" cellspacing="1" width="100%">
+      <tr>
+        <th width="150" id="first_name_label">First Name:</th>
+        <td>
+                  <input type="text" name="first_name" />
+                </td>
+                <td>
+                    <span id="first_name_error" class="custom_error"></span>
+                </td>
+      </tr>
+      <tr>
+        <th id="last_name_label">Last Name:</th>
+        <td>
+                  <input type="text" name="last_name" />
+                </td>
+                <td>
+                    <span id="last_name_error" class="custom_error"></span>
+              </td>
+      </tr>
+      <tr>
+        <th id="email_label">Email:</th>
+        <td>
+                  <input type="text" name="email" />
+                </td>
+                <td>
+                    <span id="email_error" class="custom_error"></span>
+              </td>
+      </tr>
+      <tr>
+        <th id="any_integer_label">Your age:</th>
+        <td>
+                  <input type="text" name="any_integer" />
+                </td>
+                <td>
+                    <span id="any_integer_error" class="custom_error"></span>
+                </td>
+      </tr>
+      <tr>
+        <th id="marital_status_label">Marital Status:</th>
+        <td>
+                <input type="radio" id="ms1" name="marital_status" value="single" /><label for="ms1">Single</label><br />
+              <input type="radio" id="ms2" name="marital_status" value="married" /><label for="ms2">Married</label><br />
+                <input type="radio" id="ms3" name="marital_status" value="none_of_your_business" /><label for="ms3">None of your bloomin' business</label>
+                </td>
+                <td valign="top">
+                    <span id="marital_status_error" class="custom_error"></span>
+            </td>
+      </tr>
+      </table>
+
+      <p><input type="submit" value="SUBMIT" /></p>
+
+    </form>
+  </body>
+</html>

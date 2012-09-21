@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="file:///tmp/rsv/" />
+<title>jquery_example3</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">jquery_example3</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>jquery/example_3_all_validation_rules.html</td>
+	<td></td>
+</tr>
+<!--no input should cause required fields alert.-->
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter an integer*</td>
+	<td></td>
+</tr>
+<!--1. for LLL-VVV-->
+<!--case1.1 good pattern should pass-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field1</td>
+	<td>ABC-AEI</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case1.2 good pattern:  length not match  should pass-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field1</td>
+	<td>ACBBD-AEIOU</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case1.3 bad pattern: lowercase should cause alert-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field1</td>
+	<td>BaD-AEI</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form LLL-VVV - where L is an uppercase letter and V is an uppercase vowel*</td>
+	<td></td>
+</tr>
+<!--case1.4 bad pattern: lowercase should cause alert-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field1</td>
+	<td>BAD-Aae</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form LLL-VVV - where L is an uppercase letter and V is an uppercase vowel*</td>
+	<td></td>
+</tr>
+<!--2. for DDxxx-->
+<!--case2.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field2</td>
+	<td>aB012</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case2.2 bad pattern-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field2</td>
+	<td>11012</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form DDxxx*</td>
+	<td></td>
+</tr>
+<!--case2.3 bad pattern-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field2</td>
+	<td>aaaaa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form DDxxx*</td>
+	<td></td>
+</tr>
+<!--3. for EEXX-->
+<!--case3.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field3</td>
+	<td>bB33</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case3.2 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field3</td>
+	<td>bB03</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form EEXX*</td>
+	<td></td>
+</tr>
+<!--case3.3 bad pattern2-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field3</td>
+	<td>aB13</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form EEXX*</td>
+	<td></td>
+</tr>
+<!--4. for VVvvllFF-->
+<!--case4.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field4</td>
+	<td>OUoucgAa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case4.2 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field4</td>
+	<td>oUoucgAa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form VVvvllFF*</td>
+	<td></td>
+</tr>
+<!--case4.3 bad pattern2-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field4</td>
+	<td>AAoUcgAa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form VVvvllFF*</td>
+	<td></td>
+</tr>
+<!--case4.4 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field4</td>
+	<td>OUoucgAZ</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form VVvvllFF*</td>
+	<td></td>
+</tr>
+<!--5. for #XccccCCCC-->
+<!--case5.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field5</td>
+	<td>#8rtyhWRGS</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case5.2 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field5</td>
+	<td>#artyhWRGS</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form #XccccCCCC*</td>
+	<td></td>
+</tr>
+<!--case5.3 bad pattern2-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field5</td>
+	<td>#8RRyhWRGS</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form #XccccCCCC*</td>
+	<td></td>
+</tr>
+<!--case5.4 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=custom_alpha_field5</td>
+	<td>#8rtyhaaaa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter a string of form #XccccCCCC*</td>
+	<td></td>
+</tr>
+<!--6. for case sensitive pattern-->
+<!--case6.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field1</td>
+	<td>red</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case6.2 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field1</td>
+	<td>RED</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter your favourite colour in lowercase*</td>
+	<td></td>
+</tr>
+<!--case6.3 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field1</td>
+	<td>foo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter your favourite colour in lowercase*</td>
+	<td></td>
+</tr>
+<!--7. for case insensitive pattern-->
+<!--case7.1 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field2</td>
+	<td>red</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case7.2 good pattern-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field2</td>
+	<td>RED</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:**</td>
+	<td>HACK to ignore this alert</td>
+</tr>
+<!--case7.2 bad pattern1-->
+<tr>
+	<td>type</td>
+	<td>name=reg_exp_field2</td>
+	<td>foo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAlert</td>
+	<td>glob:*Please enter your favourite colour in lowercase*</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
