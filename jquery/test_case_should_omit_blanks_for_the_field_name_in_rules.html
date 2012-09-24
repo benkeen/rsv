@@ -1,0 +1,85 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Examples -- Really Simple Validation for jQuery .</title>
+
+    <meta name="keyword" content=""/>
+    <meta name="description" content=""/>
+    <meta name="copyright" content="Copyright 1994-2010 Motorola, Inc. All Rights Reserved."/>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="jquery.rsv-2.5.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+  // a custom onComplete handler to prevent form submits for the demo
+  function myOnComplete()
+  {
+    alert("The form validates! (normally, it would submit the form here).");
+    return false;
+  }
+
+    $(document).ready(function() {
+    $("#demo_form5").RSV({
+      onCompleteHandler: myOnComplete,
+      errorFieldClass: "errorFieldDemo5",
+      displayType: "display-html",
+      errorHTMLItemBullet: "&#8212; ",
+        rules: [
+            "required, first_name ,Please enter your first name."
+        ]
+    });
+}); </script>
+
+    <style type="text/css">
+    /* these are the various classes used to style the demo error fields */
+    .errorField {
+      background-color: #990000;
+      color: white;
+    }
+    .errorFieldDemo2 {
+      background-color: #ffffcc;
+      color: #990000;
+    }
+    .errorFieldDemo5 {
+      background-color: #ffffcc;
+      border: 1px solid #aa0000;
+      color: #aa0000;
+    }
+    .errorFieldDemo6 {
+      background-color: green;
+      color: #yellow;
+    }
+    </style>
+  </head>
+  <body>
+<p class="subtitle blue">A test page derived from #5: Display type "display-html"</p>
+
+    <p>
+<pre>
+rules: [
+    "required, first_name ,Please enter your first name."
+]
+</pre>
+should not cause an alert of :
+    RSV Error: the field " first_name " doesn't exist! Please check your form and settings.
+    </p>
+
+        <div id="rsvErrors"></div>
+
+    <form action="" method="post" id="demo_form5">
+
+      <table class="demoTable" cellpadding="0" cellspacing="1">
+      <tr>
+        <th width="150">First Name:</th>
+        <td><input type="text" name="first_name" /></td>
+      </tr>
+      </table>
+
+      <p><input type="submit" value="SUBMIT" /></p>
+
+    </form>
+  </body>
+</html>
+

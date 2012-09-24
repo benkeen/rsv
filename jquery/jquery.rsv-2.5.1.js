@@ -125,7 +125,8 @@
 
 
       var requirement = row[0];
-      var fieldName   = row[1];
+      // for the case of field name wrapped by blank(s): "required, first_name ,Please enter your first name."
+      var fieldName   = $.trim(row[1]);
       var fieldName2, fieldName3, errorMessage, lengthRequirements, date_flag;
 
 
