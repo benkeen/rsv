@@ -50,10 +50,19 @@
    */
   $.fn.RSV.validate = function(event)
   {
+
     options = event.data.options;
     var form  = event.data.currForm;
     var rules = options.rules;
     returnHash = [];
+
+    //hide the previous error message if there is in the displayType: 'display-html'.
+    if(options.displayType == "display-html"){
+        $("#"+options.errorTargetElementId).text("").css("display", "none")
+        if(options.errorFieldClass != null ) {
+            $("."+options.errorFieldClass).removeClass(options.errorFieldClass)
+        }
+    }
 
     // loop through rules
     for (var i=0; i<rules.length; i++)
