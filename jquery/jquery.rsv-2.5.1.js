@@ -536,6 +536,16 @@
           }
           break;
 
+      	case "currency":
+    		
+    		 if (form[fieldName].value && !isCurrency(form[fieldName].value))
+          {
+            if (!processError(form[fieldName], errorMessage))
+              return false;
+          }
+        break;
+
+
         case "function":
           custom_function = fieldName;
           eval("var result = " + custom_function + "()");
@@ -712,6 +722,13 @@
     return true;
   }
 
+  /**
+   * Test a string is a valid currency
+   */
+  function isCurrency(str) {
+  var re = /^[0-9]+([\.,][0-9]{1,2})?$/;
+	return re.test(str);
+  }
 
   /*
    * Checks incoming date is valid. If any of the date parameters fail, it returns a string
