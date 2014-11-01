@@ -37,4 +37,5 @@ pickle-email-*.html
 **/*swp
 *swp
 *swo
+node_modules*
 
