@@ -670,7 +670,6 @@ rsv.isValidEmail = function(str)
   var dot = ".";
   var lat = s.indexOf(at);
   var lstr = s.length;
-  var ldot = s.indexOf(dot);
 
   if (s.indexOf(at)==-1 ||
      (s.indexOf(at)==-1 || s.indexOf(at)==0 || s.indexOf(at)==lstr) ||

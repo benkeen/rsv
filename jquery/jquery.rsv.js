@@ -10,56 +10,60 @@
  * whatever custom functions you need. For documentation and examples, please visit:
  *         http://www.benjaminkeen.com/software/rsv
  *
- * It is also available as standalone version (Prototype not required) and as a jQuery plugin.
- *
  * This script is written by Ben Keen with additional code contributed by Mihai Ionescu and Nathan
  * Howard. It is free to distribute, to re-write, spread on your toast - do what ever you want with it!
  */
 
-var RSV = Class.create();
+(function($) {
 
-RSV.prototype = {
-  options: {},
-  returnHash: [],
+  var options = {};
+  var returnHash = [];
 
-  initialize: function() {
-    var opts = Object.extend({
-      formID:               "",
-      rules:                [],
-      displayType:          "alert-all", // "alert-one", "alert-all" or "display-html"
-      errorFieldClass:      null,
-      errorTextIntro:       "Please fix the following error(s) and resubmit:",
-      errorJSItemBullet:    "* ",
-      errorHTMLItemBullet:  "&bull; ",
-      errorTargetElementId: "rsvErrors",
-      onCompleteHandler:    null,
-      customErrorHandler:   null
-    }, arguments[0] || {});
+  $.fn.RSV = function(params) {
+    options = $.extend({}, $.fn.RSV.defaults, params);
 
-    if (!opts.formID)
-    {
-      alert("The formID configuration setting is required.");
-      return false;
-    }
+    // should only be called on a single form, but loop through them anyway
+    return this.each(function() {
+      $(this).bind('submit', {currForm: this, options: options}, $(this).RSV.validate);
+    });
+  };
 
-    if ($(opts.formID))
-      $(opts.formID).onsubmit = this.validate.bind(this);
-
-    this.options = opts;
-  },
+  // plugin defaults - added as a property on our plugin function
+  $.fn.RSV.defaults = {
+    rules:                [],
+    displayType:          "alert-all",
+    errorFieldClass:      null,
+    errorTextIntro:       "Please fix the following error(s) and resubmit:",
+    errorJSItemBullet:    "* ",
+    errorHTMLItemBullet:  "&bull; ",
+    errorTargetElementId: "rsvErrors",
+    customErrorHandler:   null,
+    onCompleteHandler:    null
+  };
 
 
   /**
-   * @param form the name attribute of the form to validate.
-   * @param rules an array of the validation rules, each rule a string.
+   * @param event the submit event, with currForm property as the form and "options" property containing
+   *     the configuration options and validation rules.
    * @return mixed returns a boolean (success/failure) for "alert-single" and "alert-all" options, and an
    *     array of arrays for return
    */
-  validate: function()
+  $.fn.RSV.validate = function(event)
   {
-    var form  = $(this.options.formID);
-    var rules = this.options.rules;
-    this.returnHash = [];
+    options = event.data.options;
+    var form  = event.data.currForm;
+    var rules = options.rules;
+    returnHash = [];
+
+    //hide the previous error message if there is in the displayType: 'display-html'.
+    if (options.displayType == "display-html")
+    {
+      $("#" + options.errorTargetElementId).text("").hide();
+      if (options.errorFieldClass != null)
+      {
+        $("." + options.errorFieldClass).removeClass(options.errorFieldClass);
+      }
+    }
 
     // loop through rules
     for (var i=0; i<rules.length; i++)
@@ -131,8 +135,10 @@ RSV.prototype = {
 
 
       var requirement = row[0];
-      var fieldName   = row[1];
+      // for the case of field name wrapped by blank(s): "required, first_name ,Please enter your first name."
+      var fieldName   = $.trim(row[1]);
       var fieldName2, fieldName3, errorMessage, lengthRequirements, date_flag;
+
 
       // help the web developer out a little: this is a very common problem
       if (requirement != "function" && form[fieldName] == undefined)
@@ -145,26 +151,31 @@ RSV.prototype = {
       // validation and set the class name appropriately (removing the errorFieldClass, if it exists). This
       // ensures that every time the form is submitted, only the fields that contain the latest errors have
       // the error class applied
-      if (requirement != "function" && this.options.errorFieldClass)
+      if (requirement != "function" && options.errorFieldClass)
       {
         if (form[fieldName].type == undefined)
         {
-          // style each field individually
           for (var j=0; j<form[fieldName].length; j++)
-            $(form[fieldName][j]).removeClassName(this.options.errorFieldClass);
+          {
+            if ($(form[fieldName][j]).hasClass(options.errorFieldClass))
+              $(form[fieldName][j]).removeClass(options.errorFieldClass);
+          }
         }
         else
-          $(form[fieldName]).removeClassName(this.options.errorFieldClass);
+        {
+          if ($(form[fieldName]).hasClass(options.errorFieldClass))
+            $(form[fieldName]).removeClass(options.errorFieldClass);
+        }
       }
 
 
       // depending on the validation test, store the incoming strings for use later...
       if (row.length == 6)        // valid_date
       {
-        fieldName2   = row[2];
-        fieldName3   = row[3];
-        date_flag    = row[4];
-        errorMessage = row[5];
+        fieldName2    = row[2];
+        fieldName3    = row[3];
+        date_flag     = row[4];
+        errorMessage  = row[5];
       }
       else if (row.length == 5)     // reg_exp (WITH flags like g, i, m)
       {
@@ -212,7 +223,7 @@ RSV.prototype = {
             }
             if (!oneIsChecked)
             {
-              if (!this.processError(form[fieldName], errorMessage))
+              if (!processError(form[fieldName], errorMessage))
                 return false;
             }
           }
@@ -229,7 +240,7 @@ RSV.prototype = {
             // dropdown, return false
             if (!oneIsSelected || form[fieldName].length == 0)
             {
-              if (!this.processError(form[fieldName], errorMessage))
+              if (!processError(form[fieldName], errorMessage))
                 return false;
             }
           }
@@ -238,14 +249,14 @@ RSV.prototype = {
           {
             if (!form[fieldName].checked)
             {
-              if (!this.processError(form[fieldName], errorMessage))
+              if (!processError(form[fieldName], errorMessage))
                 return false;
             }
           }
           // otherwise, just perform ordinary "required" check.
           else if (!form[fieldName].value)
           {
-            if (!this.processError(form[fieldName], errorMessage))
+            if (!processError(form[fieldName], errorMessage))
               return false;
           }
           break;
@@ -253,7 +264,7 @@ RSV.prototype = {
         case "digits_only":
           if (form[fieldName].value && form[fieldName].value.match(/\D/))
           {
-            if (!this.processError(form[fieldName], errorMessage))
+            if (!processError(form[fieldName], errorMessage))
               return false;
           }
           break;
@@ -261,7 +272,7 @@ RSV.prototype = {
         case "letters_only":
           if (form[fieldName].value && form[fieldName].value.match(/[^a-zA-Z]/))
           {
-            if (!this.processError(form[fieldName], errorMessage))
+            if (!processError(form[fieldName], errorMessage))
               return false;
           }
           break;
@@ -269,7 +280,7 @@ RSV.prototype = {
         case "is_alpha":
           if (form[fieldName].value && form[fieldName].value.match(/\W/))
           {
-            if (!this.processError(form[fieldName], errorMessage))
+            if (!processError(form[fieldName], errorMessage))
               return false;
           }
           break;
@@ -290,7 +301,7 @@ RSV.prototype = {
               };
 
           var reg_exp_str = "";
-          for (j=0; j<fieldName2.length; j++)
+          for (var j=0; j<fieldName2.length; j++)
           {
             if (conversion[fieldName2.charAt(j)])
               reg_exp_str += conversion[fieldName2.charAt(j)];
@@ -301,7 +312,7 @@ RSV.prototype = {
 
           if (form[fieldName].value && reg_exp.exec(form[fieldName].value) == null)
           {
-            if (!this.processError(form[fieldName], errorMessage))
+            if (!processError(form[fieldName], errorMessage))
               return false;
           }
           break;
@@ -316,7 +327,7 @@ RSV.prototype = {
 
           if (form[fieldName].value && reg_exp.exec(form[fieldName].value) == null)
           {
-            if (!this.processError(form[fieldName], errorMessage))
+            if (!processError(form[fieldName], errorMessage))
               return false;
           }
           break;
@@ -358,7 +369,7 @@ RSV.prototype = {
             case "greater_than_or_equal":
               if (!(form[fieldName].value.length >= parseInt(rule_string)))
               {
-                if (!this.processError(form[fieldName], errorMessage))
+                if (!processError(form[fieldName], errorMessage))
                   return false;
               }
               break;
@@ -366,7 +377,7 @@ RSV.prototype = {
             case "greater_than":
               if (!(form[fieldName].value.length > parseInt(rule_string)))
               {
-                if (!this.processError(form[fieldName], errorMessage))
+                if (!processError(form[fieldName], errorMessage))
                   return false;
               }
               break;
@@ -374,7 +385,7 @@ RSV.prototype = {
             case "less_than_or_equal":
               if (!(form[fieldName].value.length <= parseInt(rule_string)))
               {
-                if (!this.processError(form[fieldName], errorMessage))
+                if (!processError(form[fieldName], errorMessage))
                   return false;
               }
               break;
@@ -382,7 +393,7 @@ RSV.prototype = {
             case "less_than":
               if (!(form[fieldName].value.length < parseInt(rule_string)))
               {
-                if (!this.processError(form[fieldName], errorMessage))
+                if (!processError(form[fieldName], errorMessage))
                   return false;
               }
               break;
@@ -396,7 +407,7 @@ RSV.prototype = {
               {
                 if (form[fieldName].value.length < fieldCount[0] || form[fieldName].value.length > fieldCount[1])
                 {
-                  if (!this.processError(form[fieldName], errorMessage))
+                  if (!processError(form[fieldName], errorMessage))
                     return false;
                 }
               }
@@ -406,19 +417,20 @@ RSV.prototype = {
               {
                 if (form[fieldName].value.length != fieldCount[0])
                 {
-                  if (!this.processError(form[fieldName], errorMessage))
+                  if (!processError(form[fieldName], errorMessage))
                     return false;
                 }
               }
+
               break;
           }
           break;
 
         // this is also true if field is empty [should be same for digits_only]
         case "valid_email":
-          if (form[fieldName].value && !this.isValidEmail(form[fieldName].value))
+          if (form[fieldName].value && !isValidEmail(form[fieldName].value))
           {
-            if (!this.processError(form[fieldName], errorMessage))
+            if (!processError(form[fieldName], errorMessage))
               return false;
           }
           break;
@@ -430,9 +442,9 @@ RSV.prototype = {
           else if (date_flag == "any_date")
             isLaterDate = false;
 
-          if (!this.isValidDate(form[fieldName].value, form[fieldName2].value, form[fieldName3].value, isLaterDate))
+          if (!isValidDate(form[fieldName].value, form[fieldName2].value, form[fieldName3].value, isLaterDate))
           {
-            if (!this.processError(form[fieldName], errorMessage))
+            if (!processError(form[fieldName], errorMessage))
               return false;
           }
           break;
@@ -440,7 +452,7 @@ RSV.prototype = {
         case "same_as":
           if (form[fieldName].value != form[fieldName2].value)
           {
-            if (!this.processError(form[fieldName], errorMessage))
+            if (!processError(form[fieldName], errorMessage))
               return false;
           }
           break;
@@ -482,7 +494,7 @@ RSV.prototype = {
             case "greater_than_or_equal":
               if (!(form[fieldName].value >= Number(rule_string)))
               {
-                if (!this.processError(form[fieldName], errorMessage))
+                if (!processError(form[fieldName], errorMessage))
                   return false;
               }
               break;
@@ -490,7 +502,7 @@ RSV.prototype = {
             case "greater_than":
               if (!(form[fieldName].value > Number(rule_string)))
               {
-                if (!this.processError(form[fieldName], errorMessage))
+                if (!processError(form[fieldName], errorMessage))
                   return false;
               }
               break;
@@ -498,7 +510,7 @@ RSV.prototype = {
             case "less_than_or_equal":
               if (!(form[fieldName].value <= Number(rule_string)))
               {
-                if (!this.processError(form[fieldName], errorMessage))
+                if (!processError(form[fieldName], errorMessage))
                   return false;
               }
               break;
@@ -506,7 +518,7 @@ RSV.prototype = {
             case "less_than":
               if (!(form[fieldName].value < Number(rule_string)))
               {
-                if (!this.processError(form[fieldName], errorMessage))
+                if (!processError(form[fieldName], errorMessage))
                   return false;
               }
               break;
@@ -517,7 +529,7 @@ RSV.prototype = {
               // if the user supplied two length fields, make sure the field is within that range
               if ((form[fieldName].value < Number(rangeValues[0])) || (form[fieldName].value > Number(rangeValues[1])))
               {
-                if (!this.processError(form[fieldName], errorMessage))
+                if (!processError(form[fieldName], errorMessage))
                   return false;
               }
               break;
@@ -532,7 +544,7 @@ RSV.prototype = {
           {
             for (var j=0; j<result.length; j++)
             {
-              if (!this.processError(result[j][0], result[j][1]))
+              if (!processError(result[j][0], result[j][1]))
                 return false;
             }
           }
@@ -546,34 +558,32 @@ RSV.prototype = {
 
 
     // if the user has defined a custom event handler, pass the information to it
-    if (typeof this.options.customErrorHandler == 'function')
-    {
-      return this.options.customErrorHandler(form, this.returnHash);
-    }
+    if (typeof options.customErrorHandler == 'function')
+      return options.customErrorHandler(form, returnHash);
 
     // if the user has chosen "alert-all" or "return-errors", perform the appropriate action
-    else if (this.options.displayType == "alert-all")
+    else if (options.displayType == "alert-all")
     {
-      var errorStr = this.options.errorTextIntro + "\n\n";
-      for (var i=0; i<this.returnHash.length; i++)
+      var errorStr = options.errorTextIntro + "\n\n";
+      for (var i=0; i<returnHash.length; i++)
       {
-        errorStr += this.options.errorJSItemBullet + this.returnHash[i][1] + "\n";
+        errorStr += options.errorJSItemBullet + returnHash[i][1] + "\n";
 
         // apply the error CSS class (if defined) all the fields and place the focus on the first
         // offending field
-        this.styleField(this.returnHash[i][0], i==0);
+        styleField(returnHash[i][0], i==0);
       }
 
-      if (this.returnHash.length > 0)
+      if (returnHash.length > 0)
       {
         alert(errorStr);
         return false;
       }
     }
 
-    else if (this.options.displayType == "display-html")
+    else if (options.displayType == "display-html")
     {
-      var success = this.displayHTMLErrors(form, this.returnHash);
+      var success = displayHTMLErrors(form, returnHash);
 
       // if it wasn't successful, just return false to stop the form submit, otherwise continue processing
       if (!success)
@@ -581,15 +591,15 @@ RSV.prototype = {
     }
 
     // finally, if the user has specified a custom onCompleteHandler, use it
-    if (typeof this.options.onCompleteHandler == 'function')
-      return this.options.onCompleteHandler();
+    if (typeof options.onCompleteHandler == 'function')
+      return options.onCompleteHandler();
     else
       return true;
-  },
+  }
 
 
   /**
-   * Processes an error message, the behaviour of which is according to the displayType setting.
+   * Processes an error message, the behaviour of which is according to the options.displayType setting.
    * It either alerts the error (with "alert-one") or stores the field node and error message in a
    * hash to return / display once all rules are processed.
    *
@@ -597,55 +607,51 @@ RSV.prototype = {
    * @param message the error message string
    * @return boolean whether or not to continue processing
    */
-  processError: function(obj, message)
+  function processError(obj, message)
   {
     message = message.replace(/%%C%%/ig, ",");
 
     var continueProcessing = true;
-    switch (this.options.displayType)
+    switch (options.displayType)
     {
       case "alert-one":
         alert(message);
-        this.styleField(obj, true);
+        styleField(obj, true);
         continueProcessing = false;
         break;
 
       case "alert-all":
       case "display-html":
-        this.returnHash.push([obj, message]);
+        returnHash.push([obj, message]);
         break;
     }
 
     return continueProcessing;
-  },
+  }
 
 
   /**
    * This function is the default handler for the "display-html" display type. This generates the errors
-   * as HTML and inserts them into the target node (errorTargetElementId). If you wish to use your own
-   * function instead of this one, uset the rsv.customErrorHandler param.
-   *
-   * @param obj the form element
-   * @param message the array of error info
+   * as HTML and inserts them into the target node (options.errorTargetElementId).
    */
-  displayHTMLErrors: function(f, errorInfo)
+  function displayHTMLErrors(f, errorInfo)
   {
-    var errorHTML = this.options.errorTextIntro + "<br /><br />";
+    var errorHTML = options.errorTextIntro + "<br /><br />";
     for (var i=0; i<errorInfo.length; i++)
     {
-      errorHTML += this.options.errorHTMLItemBullet + errorInfo[i][1] + "<br />";
-      this.styleField(errorInfo[i][0], i==0);
+      errorHTML += options.errorHTMLItemBullet + errorInfo[i][1] + "<br />";
+      styleField(errorInfo[i][0], i==0);
     }
 
     if (errorInfo.length > 0)
     {
-      $(this.options.errorTargetElementId).style.display = "block";
-      $(this.options.errorTargetElementId).innerHTML = errorHTML;
+      $("#" + options.errorTargetElementId).css("display", "block");
+      $("#" + options.errorTargetElementId).html(errorHTML);
       return false;
     }
 
     return true;
-  },
+  }
 
 
   /**
@@ -655,9 +661,9 @@ RSV.prototype = {
    * @param the offending form field element
    * @param boolean whether or not to place the mouse focus on the field
    */
-  styleField: function(field, focus)
+  function styleField(field, focus)
   {
-    // if "field" is an array: it's a radio button. Focus on the first element.
+    // if "field" is an array, it's a radio button. Focus on the first element
     if (field.type == undefined)
     {
       if (focus)
@@ -665,28 +671,31 @@ RSV.prototype = {
 
       // style each field individually
       for (var i=0; i<field.length; i++)
-        $(field[i]).addClassName(this.options.errorFieldClass);
+      {
+        if (!$(field[i]).hasClass(options.errorFieldClass))
+          $(field[i]).addClass(options.errorFieldClass);
+      }
     }
     else
     {
-      if (this.options.errorFieldClass)
-        $(field).addClassName(this.options.errorFieldClass);
+      if (options.errorFieldClass)
+        $(field).addClass(options.errorFieldClass);
       if (focus)
         field.focus();
     }
-  },
+  }
 
 
-  isValidEmail: function(str)
+  /**
+   * Tests a string is a valid email. NOT the most elegant function...
+   */
+  function isValidEmail(str)
   {
-    var str2 = str.replace(/^\s*/, "");
-    var s = str2.replace(/\s*$/, "");
-
+    var s = $.trim(str);
     var at = "@";
     var dot = ".";
     var lat = s.indexOf(at);
     var lstr = s.length;
-    var ldot = s.indexOf(dot);
 
     if (s.indexOf(at)==-1 ||
        (s.indexOf(at)==-1 || s.indexOf(at)==0 || s.indexOf(at)==lstr) ||
@@ -700,10 +709,10 @@ RSV.prototype = {
     }
 
     return true;
-  },
+  }
 
 
-  /**
+  /*
    * Checks incoming date is valid. If any of the date parameters fail, it returns a string
    * message denoting the problem.
    *
@@ -713,7 +722,7 @@ RSV.prototype = {
    * @isLaterDate a boolean value. If true, the function verifies the date being passed in is LATER
    *   than the current date
    */
-  isValidDate: function(month, day, year, isLaterDate)
+  function isValidDate(month, day, year, isLaterDate)
   {
     // depending on the year, calculate the number of days in the month
     var daysInMonth;
@@ -753,4 +762,5 @@ RSV.prototype = {
 
     return true;
   }
-}
+
+})(jQuery);
