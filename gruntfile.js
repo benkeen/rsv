@@ -14,7 +14,8 @@ module.exports = function(grunt) {
         },
         options: {
           report: "min",
-          compress: true
+          compress: true,
+          banner: '// rsv.js - Really Simple Validation\n// v2.5.3, Nov 1 2014\n// https://github.com/benkeen/rsv\n'
         }
       }
     }

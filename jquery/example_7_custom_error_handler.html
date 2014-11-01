@@ -52,14 +52,7 @@ function myCustomErrorDisplayFunction(f, errorInfo)
         document.getElementById(fieldName + "_error").innerHTML = errorInfo[i][1];
     }
 
-    // normally, we'd do something like this: only return TRUE if there were no errors.
-    // but this is just a demo. so it's commented out.
-    //return (errorInfo.length == 0) ? true : false;
-
-    if (errorInfo.length == 0)
-        alert("Form submitted here!");
-
-    return false;
+    return (errorInfo.length == 0);
 }
 
 var myRules = [

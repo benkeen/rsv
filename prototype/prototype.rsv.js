@@ -2,7 +2,7 @@
  * rsv.js - Really Simple Validation
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *
- * v2.5.1, Nov 14 2008
+ * v2.5.3, Nov 1 2014
  *
  * This powerful little script lets you add client-side validation to any webform with very little
  * work. It includes a number of pre-existing routines for common tasks like validating email
@@ -546,9 +546,10 @@ RSV.prototype = {
 
 
     // if the user has defined a custom event handler, pass the information to it
-    if (typeof this.options.customErrorHandler == 'function')
-    {
-      return this.options.customErrorHandler(form, this.returnHash);
+    if (typeof this.options.customErrorHandler == 'function')  {
+      if (!this.options.customErrorHandler(form, this.returnHash)) {
+        return false;
+      }
     }
 
     // if the user has chosen "alert-all" or "return-errors", perform the appropriate action

@@ -2,7 +2,7 @@
  * rsv.js - Really Simple Validation
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *
- * v2.5.2, Jan 30 2010
+ * v2.5.3, Nov 1 2014
  *
  * This powerful little script lets you add client-side validation to any webform with very little
  * work. It includes a number of pre-existing routines for common tasks like validating email
@@ -13,9 +13,9 @@
  * This script is written by Ben Keen with additional code contributed by Mihai Ionescu and Nathan
  * Howard. It is free to distribute, to re-write, spread on your toast - do what ever you want with it!
  */
-
+{
 if (typeof rsv == 'undefined')
-  rsv = {};
+  rsv = {};}
 
 
 // SETTINGS
@@ -529,8 +529,11 @@ rsv.validate = function(form, rules)
 
 
   // if the user has defined a custom event handler, pass the information to it
-  if (typeof rsv.customErrorHandler == 'function')
-    return rsv.customErrorHandler(form, rsv.returnHash);
+  if (typeof rsv.customErrorHandler == 'function') {
+    if (!rsv.customErrorHandler(form, rsv.returnHash)) {
+      return false;
+    }
+ }
 
   // if the user has chosen "alert-all" or "return-errors", perform the appropriate action
   else if (rsv.displayType == "alert-all")
