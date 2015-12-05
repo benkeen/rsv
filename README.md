@@ -9,6 +9,7 @@ This powerful little script lets you add client-side validation to any webform w
 a number of pre-existing routines for common tasks like validating email addresses, numbers, and other field
 content, and provides a simple mechanism to extend it to whatever custom functions you need. For documentation
 and examples, please visit:
+
 http://www.benjaminkeen.com/open-source-projects/smaller-projects/really-simple-validation-js/
 
 There are three flavours:
